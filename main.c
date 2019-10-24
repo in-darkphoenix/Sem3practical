@@ -1,139 +1,139 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <conio.h>
+#include <stdlib.h>
 
-struct node
+struct stack
 {
-
-    int id;
-    char name[20];
-    char director[20];
-    char add[20];
-    char contact[11];
-    struct node*next;
+    int info;
+    struct stack*next;
 }
-  *start,*rear,*k;
-  typedef struct node node ;
 
-  node *create();
-  void display();
-  void addbeg(node *);
-  node *del(node *);
-  int main()
-  {
-      int m,o;
-      node *p;
-      start=NULL;
-      printf("\n\tNAME-Ankit Kumar\n");
-      printf("\n\tMaharaja Agrasen Institute of Technology\n");
-      printf("\n\t");
-      printf("To perform deletion at end ");
-      printf("\n\n\t");
-      printf("\n\tpress enter ");
-      getch();
-      printf("\n\t");
-      printf("\n\tEnter initial no of college ");
-      scanf("%d",&m);
-      while(m--){
-        p=create();
-        addbeg(p);
+*top,*rear,*k;
 
-      }
-        while(o!=0)
+typedef struct stack stack;
+
+stack *create(int);
+void push(stack *);
+void display(stack *);
+void peep(int);
+void pop();
+
+void main()
+{
+    int m=8,a,choice1;
+    stack *p;
+    top=NULL;
+    printf("\n\tName - Ankit Kumar\n\t");
+    printf("\n\tMaharaja Agrasen Institute of Technology\n\t");
+    printf("\n\t");
+    printf("\n\tPlease press ENTER to continue\n\t");
+
+    getch();
+
+    printf("\n\tEnter 8 numbers\n");
+
+    while(m--)
+    {
+        printf("\t");
+        scanf("%d",&a);
+        p=create(a);
+        push(p);
+    }
+    printf("\n\t");
+    display(top);
+    printf("\n\t");
+    do
+    {
+        printf("\n\tEnter 1 to PUSH\n\t");
+         printf("\n\tEnter 2 to POP\n\t");
+          printf("\n\tEnter 3 to SEARCH\n\t");
+           printf("\n\tEnter your choice : ");
+           scanf("%d",&m);
+           switch(m)
+           {
+               case 1:
+                    printf("\n\tEnter a value - \n\t");
+                    scanf("%d",&m);
+                    printf("\n");
+                    p=create(m);
+                    push(p);
+                    break;
+
+               case 2:
+                printf("\n");
+                pop();
+                break;
+
+               case 3:
+                    printf("\n\tEnter the value to search - ");
+                    scanf("%d",&a);
+                    printf("\n\n");
+                    peep(a);
+                    break;
+
+               default: printf("\n\tWrong choice\n");
+           }
+           printf("\t");
+           display(top);
+           printf("\n\t");
+           printf("\n\tEnter 1 to continue : ");
+           scanf("%d",&choice1);
+    }
+    while(choice1==1);
+    getch();
+}
+
+stack *create(int m)
+{
+    stack *k;
+    k=((stack*)malloc(sizeof(stack)));
+    k->info=m;
+    k->next=NULL;
+    return k;
+}
+
+void push(stack *n)
+{
+    if(top==NULL)
+    {
+        top=n;
+    }
+    else
+    {
+        n->next=top;
+        top=n;
+    }
+}
+
+display(stack *k)
+{
+    while(k!=NULL)
+    {
+        printf("%d->",k->info);
+        k=k->next;
+    }
+}
+void peep(int val)
+{
+    stack *p=top;
+    stack *k;
+    int found=1;
+    while(p!=NULL)
+    {
+        if(p->info==val)
         {
-            printf("\n\n\tpress enter");
-            getch();
-            printf("\n\n\tpress 1 to insert new record at front: ");
-            printf("\n\n\t press 2 to delete record from end ");
-            printf("\n\n\tpress3 to display all records ");
-            scanf("%d",&o);
-            switch(o)
-            {
-
-                case 1 : p=create();
-                         addbeg(p);
-                         break;
-                case 2 : start=del(start);
-                         break;
-                case 3 : display();
-                         break;
-            }
+            printf("\tValue found\n\n");
+            found=0;
+            break;
         }
-  }
-              node *create()
-              {
-
-                  node *k;
-                  k=(node *)malloc(sizeof(node));
-                  printf("\n\tenter the id ");
-                  scanf("%d",&k->id);
-                   printf("\n\tenter the name of college  ");
-                  scanf("%s",k->name);
-                  printf("\n\tenter name of director ");
-                  scanf("%s",k->director);
-                  printf("\n\tenter the address of college ");
-                  scanf("%s",k->add);
-                  printf("\n\tenter contact no. : ");
-                  scanf("%s",k->contact);
-                  k->next=NULL;
-                  return k;
-              }
-               void display()
-               {
-
-                   node *k;
-                   int count =0;
-                   k=start;
-                   printf("\n\n\tS.No.\tid\tdirector\taddress\t\tcontact\n");
-                   do
-                   {
-
-                       count++;
-                       printf("\n\t%d\t%d\t%s\t%s\t%s\t\t%s\n",count,k->id,k->name,k->director,k->add,k->contact);
-                       k=k->next;
-                   }
-                     while(k!=start);
-
-               }
-                  void addbeg(node *k)
-                  {
-
-                      node *n=start;
-                      if(start==NULL)
-                      {
-
-                          start=k;
-                          start->next=start;
-                      }
-                         else
-                         {
-
-                             while(n->next!=start)
-                                n=n->next;
-                                k->next=start;
-                                start=k;
-                                n->next=start;
-
-                         }
-                      }
-                      node *del(node *start)
-                      {
-                          node *p,*q;
-                          p=start;
-                          if(p==NULL)
-                          {
-                              printf("\n\tList is empty\n");
-                          }
-                          else
-                          {
-                              while(p->next!=rear)
-                              {
-                                  q=p;
-                                  p=p->next;
-                              }
-                              printf("\n\tRecord Deleted");
-                              q->next=p->next;
-                          }
-                          rear=q;
-                          return start;
-                      }
+        p=p->next;
+    }
+    if(found)
+        printf("\n\tValue not found");
+}
+void pop()
+{
+    stack *k=top;
+    top=top->next;
+    free(k);
+}
